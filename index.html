@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mummon Raivo — Kirjoita Kirje</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --mummo-red:   #FF7D7D;
+    --jeans:       #6577B9;
+    --sweater:     #AFA56E;
+    --sweater-lt:  #D0CE95;
+    --hair:        #CEC8C8;
+    --peach:       #F9E4D4;
+    --blush:       #FDF0F0;
+    --brown:       #2B1A0E;
+    --mid:         #7A6A5A;
+    --paper:       #EDD9C8;
+    --red-dark:    #D95F5F;
+    --jeans-dark:  #4A5A9A;
+  }
+  html { font-size: 16px; }
+  body {
+    background: var(--peach);
+    color: var(--brown);
+    font-family: "Lora", Georgia, serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--mummo-red);
+    position: relative;
+    overflow: hidden;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+  }
+  .mummo-wrap {
+    flex-shrink: 0;
+    width: min(42%, 340px);
+    line-height: 0;
+  }
+  .mummo-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: bottom center;
+  }
+  .header-text {
+    flex: 1;
+    padding: 2rem 2rem 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  h1 {
+    font-family: "Abril Fatface", serif;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    color: var(--blush);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+  h1 em {
+    color: var(--brown);
+    font-style: normal;
+    display: block;
+    opacity: 0.7;
+  }
+  .tagline {
+    font-family: "Lora", serif;
+    font-style: italic;
+    color: var(--brown);
+    font-size: 0.92rem;
+    margin-top: 0.75rem;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+  .no-ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    background: var(--brown);
+    color: var(--peach);
+    font-family: "DM Mono", monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.65rem;
+    border-radius: 3px;
+    width: fit-content;
+  }
+
+  /* ── LAYOUT ── */
+  .main-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .main-wrap { grid-template-columns: 1fr; }
+    .mummo-wrap { width: min(80%, 280px); margin: 0 auto; }
+    .header-inner { flex-direction: column; align-items: center; }
+    .header-text { padding: 1rem 1.5rem 1.5rem; text-align: center; }
+    .no-ai-badge { margin: 1rem auto 0; }
+  }
+
+  /* ── FORM ELEMENTS ── */
+  label {
+    font-family: "DM Mono", monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mid);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  input[type="text"], textarea, select {
+    width: 100%;
+    background: var(--blush);
+    border: 2px solid var(--paper);
+    border-radius: 0 0 8px 0;
+    padding: 0.7rem 0.9rem;
+    font-family: "Lora", serif;
+    font-size: 0.95rem;
+    color: var(--brown);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--mummo-red); }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A6A5A' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+  }
+
+  /* ── SECTION ── */
+  .form-section { display: flex; flex-direction: column; gap: 1.5rem; }
+  .section-card {
+    background: var(--blush);
+    border: 2px solid var(--paper);
+    border-radius: 0 0 10px 0;
+    overflow: hidden;
+  }
+  .section-card-head {
+    background: var(--paper);
+    padding: 0.65rem 1rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mid);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .section-card-head:hover { background: var(--peach); }
+  .section-card-body { padding: 1.25rem; display: none; }
+  .section-card-body.open { display: block; }
+
+  /* ── LEVEL HINT ── */
+  .level-hint {
+    margin-top: 0.5rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.7rem;
+    color: var(--jeans);
+    line-height: 1.6;
+    display: none;
+    background: #EEF0FA;
+    border-left: 3px solid var(--jeans);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 0 4px 0;
+  }
+  .level-hint.visible { display: block; }
+  .level-hint strong { color: var(--brown); }
+
+  /* ── PARTY CHIPS ── */
+  .party-filter { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
+  .party-chip {
+    background: var(--blush);
+    border: 2px solid var(--paper);
+    border-radius: 3px;
+    padding: 0.18rem 0.55rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+    cursor: pointer;
+    color: var(--mid);
+    transition: all 0.12s;
+    user-select: none;
+  }
+  .party-chip:hover { border-color: var(--mid); }
+  .party-chip[data-party="SDP"].active  { background:#C8102E; border-color:#C8102E; color:white; }
+  .party-chip[data-party="Kok"].active  { background:#003580; border-color:#003580; color:white; }
+  .party-chip[data-party="Vihr"].active { background:#00903A; border-color:#00903A; color:white; }
+  .party-chip[data-party="Vas"].active  { background:#DC143C; border-color:#DC143C; color:white; }
+  .party-chip[data-party="PS"].active   { background:#DAA520; border-color:#DAA520; color:#2B1A0E; }
+  .party-chip[data-party="Kesk"].active { background:#006400; border-color:#006400; color:white; }
+  .party-chip[data-party="KD"].active   { background:#0052A5; border-color:#0052A5; color:white; }
+  .party-chip[data-party="RKP"].active  { background:#CCAA00; border-color:#CCAA00; color:#2B1A0E; }
+
+  /* ── RECIPIENT LIST ── */
+  .recipient-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--paper);
+    border-radius: 0 0 6px 0;
+    background: white;
+    margin-top: 0.5rem;
+  }
+  .recipient-item {
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid var(--paper);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    cursor: pointer;
+    transition: background 0.1s;
+    font-size: 0.85rem;
+  }
+  .recipient-item:last-child { border-bottom: none; }
+  .recipient-item:hover { background: var(--peach); }
+  .recipient-item input[type="checkbox"] { accent-color: var(--mummo-red); width: 13px; height: 13px; flex-shrink: 0; cursor: pointer; }
+  .recipient-name { flex: 1; font-family: "Lora", serif; color: var(--brown); }
+  .recipient-party {
+    font-family: "DM Mono", monospace;
+    font-size: 0.62rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    background: var(--paper);
+    color: var(--mid);
+  }
+  .list-actions {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .mini-btn {
+    background: none;
+    border: 1px solid var(--mid);
+    border-radius: 3px;
+    padding: 0.2rem 0.55rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.65rem;
+    cursor: pointer;
+    color: var(--mid);
+    transition: all 0.12s;
+  }
+  .mini-btn:hover { background: var(--mid); color: white; }
+  .mini-btn.highlight { border-color: var(--jeans); color: var(--jeans); }
+  .mini-btn.highlight:hover { background: var(--jeans); color: white; }
+  .selected-count {
+    font-family: "DM Mono", monospace;
+    font-size: 0.7rem;
+    color: var(--mummo-red);
+    margin-top: 0.35rem;
+  }
+
+  /* ── RAGE METER ── */
+  .rage-options { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+  .rage-btn {
+    background: var(--blush);
+    border: 2px solid var(--paper);
+    border-radius: 0 0 6px 0;
+    padding: 0.6rem 0.4rem;
+    font-family: "Lora", serif;
+    font-size: 0.82rem;
+    color: var(--brown);
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.3;
+    transition: all 0.15s;
+  }
+  .rage-btn:hover { border-color: var(--mid); }
+  .rage-btn.active { background: var(--mummo-red); border-color: var(--mummo-red); color: white; font-weight: 700; }
+
+  /* ── GENERATE ── */
+  .generate-btn {
+    background: var(--mummo-red);
+    color: white;
+    border: none;
+    border-radius: 0 0 12px 0;
+    padding: 1rem 2rem;
+    font-family: "Abril Fatface", serif;
+    font-size: 1.25rem;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .generate-btn:hover { background: var(--red-dark); }
+  .generate-btn:active { transform: scale(0.98); }
+
+  /* ── OUTPUT ── */
+  .output-section { display: none; margin-top: 0.5rem; }
+  .output-section.visible { display: block; }
+  .output-label {
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mid);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .template-notice {
+    background: #EEF0FA;
+    border-left: 3px solid var(--jeans);
+    padding: 0.6rem 0.9rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.7rem;
+    color: var(--jeans-dark);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    border-radius: 0 0 4px 0;
+  }
+  .letter-paper {
+    background: white;
+    border: 2px solid var(--paper);
+    border-radius: 0 0 14px 0;
+    padding: 1.75rem 1.75rem 1.5rem;
+    position: relative;
+    box-shadow: 3px 5px 0 var(--paper);
+  }
+  .letter-paper::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--mummo-red);
+  }
+  #email-output {
+    font-family: "DM Mono", monospace;
+    font-size: 0.85rem;
+    line-height: 1.85;
+    color: var(--brown);
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 120px;
+    outline: none;
+  }
+  #email-output:focus {
+    background: #fffdf9;
+  }
+  /* highlight placeholders */
+  #email-output .placeholder {
+    background: #FFE9A0;
+    border-radius: 2px;
+    padding: 0 2px;
+    cursor: text;
+  }
+  .edit-hint {
+    font-family: "DM Mono", monospace;
+    font-size: 0.65rem;
+    color: var(--mid);
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .output-actions {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .action-btn {
+    background: transparent;
+    border: 2px solid var(--brown);
+    border-radius: 0 0 8px 0;
+    padding: 0.5rem 1rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    cursor: pointer;
+    color: var(--brown);
+    transition: all 0.15s;
+  }
+  .action-btn:hover { background: var(--brown); color: var(--peach); }
+  .action-btn.jeans { border-color: var(--jeans); color: var(--jeans); }
+  .action-btn.jeans:hover { background: var(--jeans); color: white; }
+
+  /* ── PHRASE BANK (sidebar) ── */
+  .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+  .phrase-card {
+    background: var(--blush);
+    border: 2px solid var(--paper);
+    border-radius: 0 0 10px 0;
+    overflow: hidden;
+  }
+  .phrase-card-head {
+    background: var(--paper);
+    padding: 0.6rem 0.9rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mid);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+  }
+  .phrase-card-head:hover { background: var(--peach); }
+  .phrase-card-body { padding: 0.75rem; display: none; }
+  .phrase-card-body.open { display: block; }
+  .phrase-item {
+    background: white;
+    border: 1px solid var(--paper);
+    border-radius: 0 0 5px 0;
+    padding: 0.5rem 0.65rem;
+    margin-bottom: 0.4rem;
+    font-family: "Lora", serif;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.12s;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .phrase-item:hover { border-color: var(--sweater); background: #FDFAF5; }
+  .phrase-item:last-child { margin-bottom: 0; }
+  .phrase-copy-icon {
+    font-size: 0.7rem;
+    color: var(--mid);
+    flex-shrink: 0;
+    margin-top: 2px;
+    opacity: 0.6;
+  }
+  .phrase-item:hover .phrase-copy-icon { opacity: 1; }
+  .phrase-copied {
+    font-family: "DM Mono", monospace;
+    font-size: 0.62rem;
+    color: var(--sweater);
+    text-align: right;
+    padding: 0.2rem 0;
+    display: none;
+  }
+  .sidebar-note {
+    font-family: "DM Mono", monospace;
+    font-size: 0.65rem;
+    color: var(--mid);
+    line-height: 1.6;
+    padding: 0.75rem;
+    background: var(--blush);
+    border: 2px solid var(--paper);
+    border-radius: 0 0 8px 0;
+  }
+
+  /* ── ERROR ── */
+  .error-box {
+    background: #FDF0EE;
+    border: 2px solid var(--mummo-red);
+    border-radius: 0 0 8px 0;
+    padding: 0.9rem 1.1rem;
+    color: var(--red-dark);
+    font-size: 0.88rem;
+    margin-top: 0.75rem;
+    display: none;
+  }
+  .error-box.visible { display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--mid);
+    border-top: 2px solid var(--paper);
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+  }
+  footer a { color: var(--jeans); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="mummo-wrap">
+      <img src="images/Mummon_Raivo.png" alt="Mummo nostaa nyrkin">
+    </div>
+    <div class="header-text">
+      <h1>MUMMON<em>RAIVO</em></h1>
+      <p class="tagline">Kirjoita kirjeesi itse — me annamme pohjan, sanat ja sappea.</p>
+      <div class="no-ai-badge">✦ Ei tekoälyä — sinun sanasi, sinun kirjeesi</div>
+    </div>
+  </div>
+</header>
+
+<div class="main-wrap">
+
+  <!-- LEFT: FORM + OUTPUT -->
+  <div>
+    <div class="form-section">
+
+      <!-- FREE TEXT RECIPIENT -->
+      <div>
+        <label for="recipient">Kenelle? (vapaa teksti)</label>
+        <input type="text" id="recipient" placeholder="Esim. Kela, naapuri Heikki, Netflix, pankki...">
+      </div>
+
+      <!-- OR: REPRESENTATIVE TARGETING -->
+      <div class="section-card">
+        <div class="section-card-head" onclick="toggleCard(this)">
+          <span>☞ Tai valitse edustaja(t) listalta</span><span class="arrow">▼</span>
+        </div>
+        <div class="section-card-body">
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div>
+              <label>Kenelle asia kuuluu?</label>
+              <select id="level-select" onchange="updateList()">
+                <option value="">— valitse —</option>
+                <option value="tampere">Tampere — Kaupunginvaltuusto</option>
+                <option value="pirkanmaa">Pirkanmaa — Aluevaltuusto / Pirha (sote)</option>
+                <option value="finland">Suomi — Kansanedustajat (Pirkanmaan vaalipiiri)</option>
+              </select>
+              <div class="level-hint" id="level-hint"></div>
+            </div>
+            <div>
+              <label>Suodata puolueen mukaan</label>
+              <div class="party-filter" id="party-filter"></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.3rem;">
+                <label style="margin-bottom:0">Valitse vastaanottajat</label>
+              </div>
+              <div class="recipient-list" id="recipient-list">
+                <div style="padding:1rem;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--mid);text-align:center;">Valitse ensin taso ylhäältä</div>
+              </div>
+              <div class="list-actions">
+                <button class="mini-btn" onclick="selectAll()">Valitse kaikki</button>
+                <button class="mini-btn" onclick="clearAll()">Tyhjennä</button>
+                <button class="mini-btn highlight" id="copy-emails-btn" onclick="copySelectedEmails()" style="display:none;">📋 Kopioi sähköpostiosoitteet</button>
+              </div>
+              <div class="selected-count" id="selected-count"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- YOUR ISSUE -->
+      <div>
+        <label for="grievance">Mistä on kyse? (omin sanoin)</label>
+        <textarea id="grievance" placeholder="Kuvaile tilanne omin sanoin. Mitä tapahtui? Milloin? Mitä halusit, mitä sait? Pohja rakennetaan näiden pohjalta."></textarea>
+      </div>
+
+      <!-- SENDER -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <div>
+          <label for="sender-name">Lähettäjä (sinun nimesi)</label>
+          <input type="text" id="sender-name" placeholder="Etunimi Sukunimi">
+        </div>
+        <div>
+          <label for="sender-place">Paikkakunta</label>
+          <input type="text" id="sender-place" placeholder="Esim. Tampere">
+        </div>
+      </div>
+
+      <!-- ON BEHALF OF -->
+      <div>
+        <label for="behalf">Kirjoitan myös jonkun muun puolesta? (valinnainen)</label>
+        <input type="text" id="behalf" placeholder="Esim. Hirvitalon asukkaat, Pispalan kyläyhdistys...">
+      </div>
+
+      <!-- TONE -->
+      <div>
+        <label>Kirjeen sävy</label>
+        <div class="rage-options">
+          <button class="rage-btn" data-level="mild">😤 Asiallinen<br><small>Jyrkkä mutta kohtelias</small></button>
+          <button class="rage-btn active" data-level="medium">😠 Suorasukainen<br><small>Ei enää kiertelyä</small></button>
+          <button class="rage-btn" data-level="nuclear">🤬 Liekosuo-taso<br><small>Kaikki ulos</small></button>
+        </div>
+      </div>
+
+      <!-- LANGUAGE -->
+      <div>
+        <label for="language">Kirjeen kieli</label>
+        <select id="language">
+          <option value="fi">Suomi</option>
+          <option value="en">English</option>
+          <option value="sv">Svenska</option>
+        </select>
+      </div>
+
+      <!-- DESIRED OUTCOME -->
+      <div>
+        <label for="desired-outcome">Mitä vaadit tapahtuvan?</label>
+        <input type="text" id="desired-outcome" placeholder="Esim. hyvitys, kirjallinen vastaus, korjaus, selvitys 30 päivässä...">
+      </div>
+
+      <button class="generate-btn" id="generate-btn" onclick="buildTemplate()">
+        ✊ Rakenna kirjepohja
+      </button>
+    </div>
+
+    <div class="error-box" id="error-box"></div>
+
+    <!-- OUTPUT -->
+    <div class="output-section" id="output-section">
+      <div class="template-notice">
+        ✏️ Tämä on <strong>muokattava pohja</strong> — klikkaa tekstiä ja tee siitä omasi ennen lähettämistä. 
+        Keltaiset kohdat <span style="background:#FFE9A0;padding:0 3px;border-radius:2px;">[hakasulkeet]</span> odottavat sinun tietojasi.
+      </div>
+      <div class="letter-paper">
+        <div id="email-output" contenteditable="true" spellcheck="true"></div>
+      </div>
+      <div class="edit-hint">✦ Kirje on muokattavissa suoraan — klikkaa mitä tahansa kohtaa</div>
+      <div class="output-actions">
+        <button class="action-btn" onclick="copyEmail()">📋 Kopioi kirje</button>
+        <button class="action-btn" onclick="copySubject()">📌 Kopioi aihe</button>
+        <button class="action-btn jeans" id="copy-emails-out-btn" onclick="copySelectedEmails()" style="display:none;">📧 Kopioi vastaanottajat</button>
+        <button class="action-btn" onclick="buildTemplate()">🔄 Uusi pohja</button>
+      </div>
+      <div id="recipients-tip" style="display:none;margin-top:0.6rem;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--mid);line-height:1.7;"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="sidebar-note">
+      💬 <strong>Sanapankki</strong> — klikkaa lausetta kopioidaksesi sen leikepöydälle. Liitä omaan kirjeeseesi.
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-card-head" onclick="toggleCard(this)">
+        <span>Aloitus — asian esittely</span><span class="arrow">▶</span>
+      </div>
+      <div class="phrase-card-body">
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Kirjoitan teille asiassa, joka on vaatinut korjausta jo pitkään.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Otan yhteyttä, koska aiemmat yhteydenottoni eivät ole tuottaneet tulosta.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Vaadin kirjallista vastausta tähän kirjeeseen 14 päivän kuluessa.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Tilanne on kestänyt liian kauan, ja se on nyt saatava kuntoon.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-copied">Kopioitu! ✓</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-card-head" onclick="toggleCard(this)">
+        <span>Tilanteen kuvaus</span><span class="arrow">▶</span>
+      </div>
+      <div class="phrase-card-body">
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Tästä on aiheutunut minulle merkittävää haittaa ja ylimääräistä vaivaa.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Toimintanne ei vastaa sitä, mitä olette lupanneet / mitä laki edellyttää.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Olen yrittänyt ratkaista asiaa asiakaspalvelunne kautta tuloksetta.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Tämä ei ole enää hyväksyttävää.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Pyydän teitä tutustumaan liitteenä olevaan / oheiseen dokumentaatioon.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-copied">Kopioitu! ✓</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-card-head" onclick="toggleCard(this)">
+        <span>Vaatimukset</span><span class="arrow">▶</span>
+      </div>
+      <div class="phrase-card-body">
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Vaadin kirjallista selvitystä asiasta 30 päivän kuluessa tästä kirjeestä.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Pyydän teitä korjaamaan tilanteen viipymättä.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Odotamme konkreettisia toimenpiteitä, ei pelkkiä lupauksia.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Mikäli asiaan ei puututa, olen valmis viemään asian eteenpäin.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Vaadin hyvitystä aiheutuneesta haitasta.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-copied">Kopioitu! ✓</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-card-head" onclick="toggleCard(this)">
+        <span>Lopetus</span><span class="arrow">▶</span>
+      </div>
+      <div class="phrase-card-body">
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Odotan vastaustanne.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Pidän itselleni oikeuden julkistaa tämän kirjeenvaihdon, mikäli asiaan ei reagoida.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Tätä kirjettä on lähetetty myös muille asiasta vastaaville tahoille.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Terveisin, asiaanne vakavasti ottava kansalainen.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-copied">Kopioitu! ✓</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-card-head" onclick="toggleCard(this)">
+        <span>Liekosuo-tason lauseet 🔥</span><span class="arrow">▶</span>
+      </div>
+      <div class="phrase-card-body">
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Olen kyllästynyt siihen, että tavallisen ihmisen täytyy taistella saadakseen sen, mikä on oikeutetusti hänen.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Teidän organisaationne on pettänyt ihmiset, joita sen oli tarkoitus palvella.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>En aio enää odottaa. Toimikaa nyt.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Häpeän teidän puolestanne.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-item" onclick="copyPhrase(this)"><span>Tämä ei ole ensimmäinen kerta — eikä se saa olla viimeinen, johon suostutte.</span><span class="phrase-copy-icon">⧉</span></div>
+        <div class="phrase-copied">Kopioitu! ✓</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  MUMMON RAIVO &nbsp;·&nbsp; Ei tekoälyä — ei seuranta — ei mainoksia<br>
+  Teksti on kirjepohja. Muokkaa se omaksesi ennen lähettämistä.<br>
+  Lähde: <a href="https://www.tampere.fi" target="_blank">tampere.fi</a> &nbsp;·&nbsp;
+  <a href="https://pirha.fi" target="_blank">pirha.fi</a> &nbsp;·&nbsp;
+  <a href="https://www.eduskunta.fi" target="_blank">eduskunta.fi</a>
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const REPS = {
+  tampere: [
+    { name:"Kalervo Kummola", party:"Kok", email:"kalervo.kummola@tampere.fi", role:"Pj." },
+    { name:"Sofia Julin", party:"SDP", email:"sofia.julin@tampere.fi", role:"1.vpj." },
+    { name:"Julia Sangervo", party:"Vihr", email:"julia.sangervo@gmail.com", role:"2.vpj." },
+    { name:"Minna Minkkinen", party:"Vas", email:"minkkinen.minna@gmail.com", role:"3.vpj." },
+    { name:"Mikko Aaltonen", party:"Vas", email:"mikko.aaltonen@tampere.fi" },
+    { name:"Atanas Aleksovski", party:"SDP", email:"atanas.aleksovski@tampere.fi" },
+    { name:"Antti Asp", party:"SDP", email:"antti.asp@tampere.fi" },
+    { name:"Riina-Eveliina Eskelinen", party:"Kok", email:"riina-eveliina.eskelinen@tampere.fi" },
+    { name:"Tommi Evilä", party:"Kok", email:"tommi.evila@tampere.fi" },
+    { name:"Hanna-Maria Grann", party:"SDP", email:"hanna-maria.grann@tampere.fi" },
+    { name:"Jukka Gustafsson", party:"SDP", email:"jukka.gustafsson10@outlook.com" },
+    { name:"Aino Halinen", party:"Vas", email:"aino.halinen@tampere.fi" },
+    { name:"Milka Hanhela", party:"Vas", email:"milka.hanhela@gmail.com" },
+    { name:"Vilhartti Hanhilahti", party:"Kesk", email:"vilhartti.hanhilahti@tampere.fi" },
+    { name:"Matti Helimo", party:"Kok", email:"matti.helimo@tampere.fi" },
+    { name:"Kari-Matti Hiltunen", party:"Kok", email:"kari-matti.hiltunen@tampere.fi" },
+    { name:"Juho Hirvelä", party:"PS", email:"juho.hirvela@tampere.fi" },
+    { name:"Mira Hirvonen", party:"SDP", email:"mira.hirvonen1@tampere.fi" },
+    { name:"Ronny Holmqvist", party:"RKP", email:"ronny.holmqvist@tampere.fi" },
+    { name:"Anna-Kaisa Ikonen", party:"Kok", email:"anna-kaisa.ikonen@tampere.fi" },
+    { name:"Antti Ivanoff", party:"Kok", email:"laheta@anttiivanoff.com" },
+    { name:"Tuila Jaatinen", party:"SDP", email:"tuila.jaatinen1@tampere.fi" },
+    { name:"Anne-Mari Jussila", party:"Kok", email:"anne-mari.jussila@tampere.fi" },
+    { name:"Perttu Jussila", party:"Vihr", email:"perttu.jussila@tampere.fi" },
+    { name:"Aleksi Jäntti", party:"Kok", email:"aleksi.jantti@tampere.fi" },
+    { name:"Elina Järvenpää", party:"Kok", email:"elina.jarvenpaa@tampere.fi" },
+    { name:"Vilma Järvisalo", party:"Vihr", email:"vilma.jarvisalo@tampere.fi" },
+    { name:"Kirsi Kaivonen", party:"SDP", email:"kirsi.kaivonen@tampere.fi" },
+    { name:"Kalle Kallio", party:"SDP", email:"kalle.kallio@tampere.fi" },
+    { name:"Pilvi Kuitu", party:"SDP", email:"kuitupilvi@gmail.com" },
+    { name:"Johanna Kirjavainen", party:"Kok", email:"johanna.kirjavainen@tampere.fi" },
+    { name:"Jaakko Mustakallio", party:"Kok", email:"jaakko.mustakallio@tampere.fi" },
+    { name:"Ilmari Nurminen", party:"SDP", email:"ilmari.nurminen@tampere.fi" },
+    { name:"Sakari Puisto", party:"PS", email:"sakari.puisto@eduskunta.fi" },
+    { name:"Sirpa Pursiainen", party:"PS", email:"sirpa.pursiainen@gmail.com" },
+    { name:"Jouni Sirén", party:"Vas", email:"jouni.siren@protonmail.com" },
+    { name:"Sari Tanus", party:"KD", email:"sari.tanus@tampere.fi" },
+    { name:"Pia Viitanen", party:"SDP", email:"pia.viitanen@tampere.fi" },
+    { name:"Laura Korhonen", party:"Vas", email:"laura.korhonen@tampere.fi" },
+    { name:"Lauri Lindén", party:"Vas", email:"lauri.linden@tampere.fi" },
+    { name:"Johanna Loukaskorpi", party:"SDP", email:"johanna.loukaskorpi@tampere.fi" },
+    { name:"Lauri Lyly", party:"SDP", email:"lauri.lyly@tampere.fi" },
+    { name:"Mahmoud Machaal", party:"SDP", email:"mahmoud.machaal@tampere.fi" },
+    { name:"Oliver Priimägi", party:"SDP", email:"oliver.priimaegi@tampere.fi" },
+    { name:"Atte Virolainen", party:"SDP", email:"atte.virolainen@tampere.fi" },
+  ],
+  pirkanmaa: [
+    { name:"Jari Andersson", party:"Kok", email:"jari.andersson@pirha.fi", role:"Pj." },
+    { name:"Sami Ahola", party:"PS", email:"sami.ahola@pirha.fi" },
+    { name:"Marika Ala-Herttuala", party:"Kok", email:"marika.ala-herttuala@pirha.fi" },
+    { name:"Sofia Vikman", party:"Kok", email:"sofia.vikman@pirha.fi" },
+    { name:"Tuula Petäkoski-Hult", party:"SDP", email:"tuula.petakoski-hult@pirha.fi" },
+    { name:"Anita Huhtala", party:"Vihr", email:"anita.huhtala@pirha.fi" },
+    { name:"Roope Lehto", party:"SDP", email:"roope.lehto@pirha.fi" },
+    { name:"Aleksi Jäntti", party:"Kok", email:"aleksi.jantti@pirha.fi" },
+    { name:"Jenni Kiiskinen", party:"Vihr", email:"jenni.kiiskinen@pirha.fi" },
+    { name:"Inka Loppi", party:"SDP", email:"inka.loppi@pirha.fi" },
+    { name:"Milka Hanhela", party:"Vas", email:"milka.hanhela@pirha.fi" },
+    { name:"Kukka Kunnari", party:"Vas", email:"kukka.kunnari@pirha.fi" },
+  ],
+  finland: [
+    { name:"Marko Asell", party:"SDP", email:"marko.asell@eduskunta.fi" },
+    { name:"Lotta Hamari", party:"SDP", email:"lotta.hamari@eduskunta.fi" },
+    { name:"Lauri Lyly", party:"SDP", email:"lauri.lyly@eduskunta.fi" },
+    { name:"Ville Merinen", party:"SDP", email:"ville.merinen@eduskunta.fi" },
+    { name:"Pia Viitanen", party:"SDP", email:"pia.viitanen@eduskunta.fi" },
+    { name:"Anna-Kaisa Ikonen", party:"Kok", email:"anna-kaisa.ikonen@eduskunta.fi" },
+    { name:"Aleksi Jäntti", party:"Kok", email:"aleksi.jantti@eduskunta.fi" },
+    { name:"Pauli Kiuru", party:"Kok", email:"pauli.kiuru@eduskunta.fi" },
+    { name:"Arto Satonen", party:"Kok", email:"arto.satonen@eduskunta.fi" },
+    { name:"Sofia Vikman", party:"Kok", email:"sofia.vikman@eduskunta.fi" },
+    { name:"Anna Kontula", party:"Vas", email:"anna.kontula@eduskunta.fi" },
+    { name:"Oras Tynkkynen", party:"Vihr", email:"oras.tynkkynen@eduskunta.fi" },
+    { name:"Jouni Ovaska", party:"Kesk", email:"jouni.ovaska@eduskunta.fi" },
+    { name:"Sanna Marin", party:"SDP", email:"sanna.marin@eduskunta.fi" },
+    { name:"Miko Bergbom", party:"PS", email:"miko.bergbom@eduskunta.fi" },
+    { name:"Veijo Niemi", party:"PS", email:"veijo.niemi@eduskunta.fi" },
+    { name:"Sakari Puisto", party:"PS", email:"sakari.puisto@eduskunta.fi" },
+    { name:"Sami Savio", party:"PS", email:"sami.savio@eduskunta.fi" },
+    { name:"Joakim Vigelius", party:"PS", email:"joakim.vigelius@eduskunta.fi" },
+    { name:"Sari Tanus", party:"KD", email:"sari.tanus@eduskunta.fi" },
+  ]
+};
+
+const LEVEL_HINTS = {
+  tampere:   "<strong>Kaupunginvaltuusto</strong> päättää: koulut, päiväkodit, kirjastot, kaavoitus, kadut, kaupungin budjetti ja paikalliset palvelut.",
+  pirkanmaa: "<strong>Aluevaltuusto (Pirha)</strong> päättää: terveyskeskukset, sairaalat, mielenterveyspalvelut, vanhustenhoito, sosiaalipalvelut — kaikki sote koko Pirkanmaalla.",
+  finland:   "<strong>Kansanedustajat</strong> päättävät: kansalliset lait, Kelan säännöt, asumistuet, verotus, maahanmuutto — kaikki mikä vaatii eduskunnan päätöksen."
+};
+
+// TEMPLATES
+const TEMPLATES = {
+  fi: {
+    mild: (r,g,o,s,p,b,date) => `Aihe: Kirjallinen yhteydenotto asiassa: ${g||"[asia]"}
+
+${r||"[vastaanottaja]"},
+
+Kirjoitan teille asiassa, joka kaipaa pikaisesti huomiota.
+
+${b ? "Kirjoitan " + b + " puolesta. " : ""}${g||"[Kuvaile tilanne tarkemmin tähän.]"}
+
+${o ? "Pyydän teitä " + o + "." : "Pyydän kirjallista vastausta asiaan 30 päivän kuluessa."}
+
+Odotan toimenpiteitänne.
+
+Terveisin,
+${s||"[nimesi]"}${p ? ", " + p : ""}
+${date}`,
+
+    medium: (r,g,o,s,p,b,date) => `Aihe: Vaatimus toimenpiteistä — ${g||"[asia]"}
+
+${r||"[vastaanottaja]"},
+
+Otan yhteyttä, koska tilanne ei ole enää hyväksyttävä.
+
+${b ? "Kirjoitan " + b + " puolesta. " : ""}${g||"[Kuvaile tilanne tarkemmin tähän.]"}
+
+Toimintanne ei vastaa sitä, mitä olette lupanneet — tai mitä meillä on oikeus odottaa.
+
+${o ? "Vaadin: " + o + "." : "Vaadin kirjallista selvitystä ja konkreettisia toimenpiteitä 14 päivän kuluessa."}
+
+Mikäli asiaan ei puututa, olen valmis viemään sen eteenpäin.
+
+Terveisin,
+${s||"[nimesi]"}${p ? ", " + p : ""}
+${date}`,
+
+    nuclear: (r,g,o,s,p,b,date) => `Aihe: KIIREELLINEN — Vaadin välittömiä toimenpiteitä
+
+${r||"[vastaanottaja]"},
+
+Olen kyllästynyt siihen, että tavallisen ihmisen täytyy taistella saadakseen sen, mikä on oikeutetusti hänen.
+
+${b ? "Kirjoitan " + b + " puolesta. " : ""}${g||"[Kuvaile tilanne tarkemmin tähän.]"}
+
+Teidän organisaationne on pettänyt ihmiset, joita sen oli tarkoitus palvella. Tämä ei ole ensimmäinen kerta — eikä se saa olla viimeinen kerta, johon suostutte.
+
+${o ? "Vaadin välittömästi: " + o + "." : "Vaadin kirjallista vastausta 7 päivän kuluessa. En aio enää odottaa."}
+
+Pidän itselleni oikeuden julkistaa tämän kirjeenvaihdon, mikäli asiaan ei reagoida.
+
+${s||"[nimesi]"}${p ? ", " + p : ""}
+${date}`
+  },
+  en: {
+    mild: (r,g,o,s,p,b,date) => `Subject: Written complaint regarding: ${g||"[issue]"}
+
+Dear ${r||"[recipient]"},
+
+I am writing to bring an important matter to your attention.
+
+${b ? "I am writing on behalf of " + b + ". " : ""}${g||"[Describe the situation in more detail here.]"}
+
+${o ? "I kindly request that you " + o + "." : "I request a written response within 30 days."}
+
+I look forward to your reply.
+
+Yours sincerely,
+${s||"[your name]"}${p ? ", " + p : ""}
+${date}`,
+
+    medium: (r,g,o,s,p,b,date) => `Subject: Formal complaint — ${g||"[issue]"}
+
+Dear ${r||"[recipient]"},
+
+I am contacting you because this situation has gone on long enough.
+
+${b ? "I am writing on behalf of " + b + ". " : ""}${g||"[Describe the situation in more detail here.]"}
+
+Your conduct does not meet what you have promised — or what we are entitled to expect.
+
+${o ? "I demand: " + o + "." : "I demand a written explanation and concrete action within 14 days."}
+
+If this is not addressed, I am prepared to escalate.
+
+Yours,
+${s||"[your name]"}${p ? ", " + p : ""}
+${date}`,
+
+    nuclear: (r,g,o,s,p,b,date) => `Subject: URGENT — Immediate action required
+
+Dear ${r||"[recipient]"},
+
+I am tired of ordinary people having to fight for what is rightfully theirs.
+
+${b ? "I write on behalf of " + b + ". " : ""}${g||"[Describe the situation in more detail here.]"}
+
+Your organisation has failed the very people it was meant to serve. This is not the first time — and it must not be allowed to continue.
+
+${o ? "I demand immediately: " + o + "." : "I demand a written response within 7 days. I will not wait any longer."}
+
+I reserve the right to make this correspondence public if no action is taken.
+
+${s||"[your name]"}${p ? ", " + p : ""}
+${date}`
+  },
+  sv: {
+    mild: (r,g,o,s,p,b,date) => `Ämne: Skriftlig kontakt angående: ${g||"[ärende]"}
+
+${r||"[mottagare]"},
+
+Jag skriver till er i ett ärende som behöver uppmärksamhet.
+
+${b ? "Jag skriver på uppdrag av " + b + ". " : ""}${g||"[Beskriv situationen mer detaljerat här.]"}
+
+${o ? "Jag ber er " + o + "." : "Jag ber om skriftligt svar inom 30 dagar."}
+
+Med vänliga hälsningar,
+${s||"[ditt namn]"}${p ? ", " + p : ""}
+${date}`,
+
+    medium: (r,g,o,s,p,b,date) => `Ämne: Krav på åtgärder — ${g||"[ärende]"}
+
+${r||"[mottagare]"},
+
+Jag tar kontakt eftersom situationen inte längre är acceptabel.
+
+${b ? "Jag skriver på uppdrag av " + b + ". " : ""}${g||"[Beskriv situationen mer detaljerat här.]"}
+
+Er verksamhet motsvarar inte det ni lovat — eller vad vi har rätt att förvänta oss.
+
+${o ? "Jag kräver: " + o + "." : "Jag kräver skriftlig redogörelse och konkreta åtgärder inom 14 dagar."}
+
+Om ärendet inte åtgärdas är jag beredd att gå vidare.
+
+Med hälsningar,
+${s||"[ditt namn]"}${p ? ", " + p : ""}
+${date}`,
+
+    nuclear: (r,g,o,s,p,b,date) => `Ämne: BRÅDSKANDE — Krav på omedelbara åtgärder
+
+${r||"[mottagare]"},
+
+Jag är trött på att vanliga människor måste kämpa för det som rättmätigt tillhör dem.
+
+${b ? "Jag skriver på uppdrag av " + b + ". " : ""}${g||"[Beskriv situationen mer detaljerat här.]"}
+
+Er organisation har svikit de människor den var avsedd att tjäna.
+
+${o ? "Jag kräver omedelbart: " + o + "." : "Jag kräver skriftligt svar inom 7 dagar."}
+
+Jag förbehåller mig rätten att offentliggöra denna skriftväxling om inga åtgärder vidtas.
+
+${s||"[ditt namn]"}${p ? ", " + p : ""}
+${date}`
+  }
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let activeParties = new Set();
+let selectedEmails = new Set();
+
+// ── UI HELPERS ────────────────────────────────────────────────────────────
+function toggleCard(head) {
+  const body = head.nextElementSibling;
+  const arrow = head.querySelector(".arrow");
+  body.classList.toggle("open");
+  arrow.textContent = body.classList.contains("open") ? "▲" : "▼";
+}
+
+document.querySelectorAll(".rage-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".rage-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+
+// ── REPRESENTATIVE LIST ────────────────────────────────────────────────────
+function updateList() {
+  const level = document.getElementById("level-select").value;
+  selectedEmails.clear();
+  activeParties.clear();
+  const hint = document.getElementById("level-hint");
+  const pf = document.getElementById("party-filter");
+  if (!level) {
+    document.getElementById("recipient-list").innerHTML =
+      '<div style="padding:1rem;font-family:DM Mono,monospace;font-size:0.78rem;color:var(--mid);text-align:center;">Valitse ensin taso ylhäältä</div>';
+    pf.innerHTML = "";
+    hint.classList.remove("visible");
+    updateCount();
+    return;
+  }
+  hint.innerHTML = LEVEL_HINTS[level];
+  hint.classList.add("visible");
+  const parties = [...new Set((REPS[level]||[]).map(r=>r.party).filter(p=>p&&p!=="—"))].sort();
+  pf.innerHTML = "";
+  parties.forEach(p => {
+    const c = document.createElement("span");
+    c.className = "party-chip"; c.dataset.party = p; c.textContent = p;
+    c.onclick = () => {
+      c.classList.toggle("active");
+      activeParties[c.classList.contains("active")?"add":"delete"](p);
+      renderList(level);
+    };
+    pf.appendChild(c);
+  });
+  renderList(level);
+}
+
+function renderList(level) {
+  const reps = REPS[level]||[];
+  const filtered = activeParties.size===0 ? reps : reps.filter(r=>activeParties.has(r.party));
+  const list = document.getElementById("recipient-list");
+  list.innerHTML = "";
+  if (!filtered.length) {
+    list.innerHTML = '<div style="padding:1rem;font-family:DM Mono,monospace;font-size:0.78rem;color:var(--mid);text-align:center;">Ei tuloksia</div>';
+    return;
+  }
+  filtered.forEach(r => {
+    const item = document.createElement("div");
+    item.className = "recipient-item";
+    const cb = document.createElement("input"); cb.type="checkbox"; cb.checked=selectedEmails.has(r.email);
+    cb.onchange = () => { selectedEmails[cb.checked?"add":"delete"](r.email); updateCount(); };
+    const name = document.createElement("span"); name.className="recipient-name";
+    name.textContent = r.name + (r.role?" · "+r.role:"");
+    const party = document.createElement("span"); party.className="recipient-party"; party.textContent=r.party;
+    item.appendChild(cb); item.appendChild(name); item.appendChild(party);
+    item.onclick = e => { if(e.target!==cb){cb.checked=!cb.checked; cb.onchange();} };
+    list.appendChild(item);
+  });
+  updateCount();
+}
+
+function selectAll() {
+  const level = document.getElementById("level-select").value;
+  const reps = REPS[level]||[];
+  const filtered = activeParties.size===0 ? reps : reps.filter(r=>activeParties.has(r.party));
+  filtered.forEach(r=>selectedEmails.add(r.email));
+  renderList(level);
+}
+function clearAll() {
+  selectedEmails.clear();
+  const level = document.getElementById("level-select").value;
+  if(level) renderList(level); updateCount();
+}
+function updateCount() {
+  const el = document.getElementById("selected-count");
+  const btn = document.getElementById("copy-emails-btn");
+  const outBtn = document.getElementById("copy-emails-out-btn");
+  if(selectedEmails.size>0){
+    el.textContent = selectedEmails.size+" vastaanottajaa valittu";
+    btn.style.display="inline-block";
+    if(outBtn) outBtn.style.display="inline-block";
+  } else {
+    el.textContent=""; btn.style.display="none";
+    if(outBtn) outBtn.style.display="none";
+  }
+}
+
+// ── BUILD TEMPLATE ────────────────────────────────────────────────────────
+function buildTemplate() {
+  const recipient = document.getElementById("recipient").value.trim();
+  const grievance  = document.getElementById("grievance").value.trim();
+  const senderName = document.getElementById("sender-name").value.trim();
+  const senderPlace= document.getElementById("sender-place").value.trim();
+  const behalf     = document.getElementById("behalf").value.trim();
+  const outcome    = document.getElementById("desired-outcome").value.trim();
+  const lang       = document.getElementById("language").value;
+  const level      = document.querySelector(".rage-btn.active").dataset.level;
+  const error      = document.getElementById("error-box");
+  error.classList.remove("visible");
+
+  // Determine recipient string
+  let recipientStr = recipient;
+  if (selectedEmails.size > 0) {
+    const lvl = document.getElementById("level-select").value;
+    const names = (REPS[lvl]||[]).filter(r=>selectedEmails.has(r.email)).map(r=>r.name).join(", ");
+    if (names) recipientStr = names;
+  }
+  if (!recipientStr) recipientStr = "";
+
+  const today = new Date().toLocaleDateString("fi-FI", {day:"numeric",month:"numeric",year:"numeric"});
+  const tmpl = TEMPLATES[lang]?.[level];
+  if (!tmpl) return;
+
+  const text = tmpl(recipientStr, grievance, outcome, senderName, senderPlace, behalf, today);
+
+  const out = document.getElementById("email-output");
+  // Render with highlighted placeholders
+  const escaped = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const highlighted = escaped.replace(/\[([^\]]+)\]/g,
+    '<span class="placeholder" title="Täytä tämä kohta">[$1]</span>');
+  out.innerHTML = highlighted;
+
+  const section = document.getElementById("output-section");
+  section.classList.add("visible");
+  section.scrollIntoView({behavior:"smooth", block:"start"});
+
+  // Show recipient tip
+  const tip = document.getElementById("recipients-tip");
+  if (selectedEmails.size > 0) {
+    tip.innerHTML = "📧 Vastaanottajat: <span style='color:var(--brown);word-break:break-all;'>"
+      + [...selectedEmails].join(", ") + "</span>";
+    tip.style.display = "block";
+  } else { tip.style.display = "none"; }
+}
+
+// ── COPY HELPERS ──────────────────────────────────────────────────────────
+function copyEmail() {
+  const text = document.getElementById("email-output").innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target; btn.textContent="✓ Kopioitu!";
+    setTimeout(()=>btn.textContent="📋 Kopioi kirje",2000);
+  });
+}
+function copySubject() {
+  const text = document.getElementById("email-output").innerText;
+  const line = text.split("\n").find(l=>l.toLowerCase().startsWith("aihe:")||l.toLowerCase().startsWith("subject:")||l.toLowerCase().startsWith("ämne:"));
+  if (!line) return;
+  const subj = line.replace(/^(aihe|subject|ämne):\s*/i,"").trim();
+  navigator.clipboard.writeText(subj).then(()=>{
+    const btn=event.target; btn.textContent="✓ Kopioitu!";
+    setTimeout(()=>btn.textContent="📌 Kopioi aihe",2000);
+  });
+}
+function copySelectedEmails() {
+  if(!selectedEmails.size) return;
+  navigator.clipboard.writeText([...selectedEmails].join(", ")).then(()=>{
+    const btn=event.target; btn.textContent="✓ Kopioitu!";
+    setTimeout(()=>{ btn.textContent="📋 Kopioi sähköpostiosoitteet"; },2000);
+  });
+}
+
+// ── PHRASE BANK ────────────────────────────────────────────────────────────
+function copyPhrase(item) {
+  const text = item.querySelector("span").textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const copied = item.closest(".phrase-card-body").querySelector(".phrase-copied");
+    if(copied){ copied.textContent="✓ Kopioitu leikepöydälle"; copied.style.display="block";
+      setTimeout(()=>copied.style.display="none",2000); }
+  });
+}
+</script>
+</body>
+</html>
