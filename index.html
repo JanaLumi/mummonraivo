@@ -94,7 +94,7 @@
               </div>
               <div class="selected-count" id="selected-count"></div>
               <div class="list-actions" style="margin-top:0.5rem;">
-                <button class="mini-btn highlight" id="copy-emails-btn" onclick="copySelectedEmails()" style="display:none;">📋 Kopioi kaikki valitut sähköpostit</button>
+                <button class="mini-btn highlight" id="copy-emails-btn" onclick="copySelectedEmails(this)" style="display:none;">📋 Kopioi kaikki valitut sähköpostit</button>
               </div>
             </div>
           </div>
@@ -634,14 +634,14 @@ async function buildTemplate() {
 }
 
 // ── COPY HELPERS ──────────────────────────────────────────────────────────
-function copyEmail() {
+function copyEmail(btn) {
   const text = document.getElementById("email-output").innerText;
   navigator.clipboard.writeText(text).then(() => {
     const btn = event.target; btn.textContent="✓ Kopioitu!";
     setTimeout(()=>btn.textContent="📋 Kopioi kirje",2000);
   });
 }
-function copySubject() {
+function copySubject(btn) {
   const text = document.getElementById("email-output").innerText;
   const line = text.split("\n").find(l=>l.toLowerCase().startsWith("aihe:")||l.toLowerCase().startsWith("subject:")||l.toLowerCase().startsWith("ämne:"));
   if (!line) return;
@@ -651,7 +651,7 @@ function copySubject() {
     setTimeout(()=>btn.textContent="📌 Kopioi aihe",2000);
   });
 }
-function copySelectedEmails() {
+function copySelectedEmails(btn) {
   const all = allSelectedEmails();
   if (!all.size) return;
   navigator.clipboard.writeText([...all].join(", ")).then(()=>{
