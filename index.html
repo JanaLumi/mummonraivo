@@ -178,9 +178,9 @@
       </div>
       <div class="edit-hint">✦ Kirje on muokattavissa suoraan — klikkaa mitä tahansa kohtaa</div>
       <div class="output-actions">
-        <button class="action-btn" onclick="copyEmail()">📋 Kopioi kirje</button>
-        <button class="action-btn" onclick="copySubject()">📌 Kopioi aihe</button>
-        <button class="action-btn jeans" id="copy-emails-out-btn" onclick="copySelectedEmails()" style="display:none;">📧 Kopioi vastaanottajat</button>
+        <button class="action-btn" onclick="copyEmail(this)">📋 Kopioi kirje</button>
+        <button class="action-btn" onclick="copySubject(this)">📌 Kopioi aihe</button>
+        <button class="action-btn jeans" id="copy-emails-out-btn" onclick="copySelectedEmails(this)" style="display:none;">📧 Kopioi vastaanottajat</button>
         <button class="action-btn jeans" onclick="openMailClient()">✉️ Avaa sähköpostiohjelmassa</button>
         <button class="action-btn" onclick="buildTemplate()">🔄 Uusi pohja</button>
       </div>
