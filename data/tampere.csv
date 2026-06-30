@@ -1,8 +1,8 @@
 name,party,email,role,profession,board_role,notes
-Kalervo Kummola,Kok,kalervo.kummola@tampere.fi,Pj.,,,
+Kalervo Kummola,Kok,kalervo.kummola@tampere.fi,,,Pj.,
 Sofia Julin,SDP,sofia.julin@tampere.fi,1.vpj.,,,
-Julia Sangervo,Vihr,julia.sangervo@gmail.com,2.vpj.,,,
-Minna Minkkinen,Vas,minkkinen.minna@gmail.com,3.vpj.,,,
+Julia Sangervo,Vihr,julia.sangervo@gmail.com,,,2.vpj.,
+Minna Minkkinen,Vas,minkkinen.minna@gmail.com,,,3.vpj.,
 Mikko Aaltonen,Vas,mikko.aaltonen@tampere.fi,,,,
 Atanas Aleksovski,SDP,atanas.aleksovski@tampere.fi,,,,
 Antti Asp,SDP,antti.asp@tampere.fi,,,,
