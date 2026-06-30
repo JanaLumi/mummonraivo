@@ -563,7 +563,16 @@ function renderList(level) {
     // Show party chip
     const party = document.createElement("span"); party.className="recipient-party"; party.textContent=r.party;
     item.appendChild(cb); item.appendChild(name); item.appendChild(party);
-    // Show city chip if present (Pirkanmaa)
+    // Board role chip (puheenjohtaja, varapuheenjohtaja etc.) — jeans blue
+    if (r.board_role) {
+      const boardTag = document.createElement("span");
+      boardTag.className = "recipient-party";
+      boardTag.style.cssText = "background:#dde1f5;color:var(--jeans);border:1px solid var(--jeans);";
+      boardTag.title = "Lautakuntarooli";
+      boardTag.textContent = r.board_role;
+      item.appendChild(boardTag);
+    }
+    // City chip (Pirkanmaa) — warm peach
     if (r.city) {
       const cityTag = document.createElement("span");
       cityTag.className = "recipient-party";
